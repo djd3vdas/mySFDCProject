@@ -1,4 +1,4 @@
-<template>    
+<template>
     <div class="c-container">
         <lightning-layout>
             <lightning-layout-item padding="around-small">
@@ -11,17 +11,17 @@
                     <lightning-layout-item padding="around-small">
                         <div class="slds-card">
                             <p class="slds-p-horizontal_medium">{objectName} Records based on field selection </p>
-                            <br></br>                            
-                                <lightning-datatable 
+                            <br></br>
+                                <lightning-datatable
                                     key-field="id"
                                     data={data}
                                     columns={columns}
                                     min-column-width=200>
-                                </lightning-datatable>                            
-                        </div>         
+                                </lightning-datatable>
+                        </div>
                     </lightning-layout-item>
                 </div>
-            </template>        
+            </template>
         </lightning-layout>
-    </div>    
+    </div>
 </template>

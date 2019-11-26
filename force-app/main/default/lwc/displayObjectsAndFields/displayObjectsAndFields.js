@@ -10,8 +10,8 @@ const DELAY = 300;
 
 //define data table columns
 const columns = [
-    { label: 'Field Label', fieldName: 'FieldLabel' }, 
-    { label: 'Field API Name', fieldName: 'FieldAPIName' },       
+    { label: 'Field Label', fieldName: 'FieldLabel' },
+    { label: 'Field API Name', fieldName: 'FieldAPIName' },
 ];
 
 let i=0;
@@ -30,22 +30,22 @@ export default class DisplayObjectsAndFields extends LightningElement {
     @track value = '';  //this displays selected value of combo box
     @track items = []; //this holds the array for records with value & label
     @track fieldItems = []; //this holds the array for records with table data
-    
+
     @track columns = columns;   //columns for List of fields datatable
     @track selectedFieldsValue=''; //fields selected in datatable
     @track tableData;   //data for list of fields datatable
-    
+
     //retrieve object information to be displayed in combo box and prepare an array
     @wire(retreieveObjects)
     wiredObjects({ error, data }) {
         if (data) {
-            
+
             for(i=0; i<data.length; i++) {
-                console.log('MasterLabel=' + data[i].MasterLabel 
-                    + 'QualifiedApiName=' + data[i].QualifiedApiName);
-                this.items = [...this.items ,{value: data[i].QualifiedApiName, 
-                                              label: data[i].MasterLabel}];                                   
-            } 
+                /*console.log('MasterLabel=' + data[i].MasterLabel
+                    + 'QualifiedApiName=' + data[i].QualifiedApiName);*/
+                this.items = [...this.items ,{value: data[i].QualifiedApiName,
+                                              label: data[i].MasterLabel}];
+            }
             this.error = undefined;
         } else if (error) {
             this.error = error;
@@ -61,7 +61,7 @@ export default class DisplayObjectsAndFields extends LightningElement {
     //retrieve field information based on selected object API name.
     @wire(getListOfFields,{objectAPIName: '$value'})
     wiredFields({ error, data }) {
-        if (data) {            
+        if (data) {
             //first parse the data as entire map is stored as JSON string
             objStr = JSON.parse(data);
 
@@ -73,7 +73,7 @@ export default class DisplayObjectsAndFields extends LightningElement {
                     {FieldLabel: objStr[i], FieldAPIName: i},...this.fieldItems];  
             }
             this.tableData = this.fieldItems;
-            this.error = undefined;            
+            this.error = undefined;
         } else if (error) {
             this.error = error;
             this.data = undefined;
@@ -86,37 +86,37 @@ export default class DisplayObjectsAndFields extends LightningElement {
         const selectedOption = event.detail.value;
         console.log('selectedOption=' + selectedOption);
         this.value = selectedOption;
-        this.fieldItems = []; //initialize fieldItems array 
+        this.fieldItems = []; //initialize fieldItems array
         this.tableData = [];  //initialize list of fields datatable data
 
         //deplay the processing
         window.clearTimeout(this.delayTimeout);
-        
+
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.delayTimeout = setTimeout(() => {
             this.value = selectedOption;
         }, DELAY);
-        
+
     }
 
     //this method is fired based on row selection of List of fields datatable
     handleRowAction(event){
-        const selectedRows = event.detail.selectedRows;        
+        const selectedRows = event.detail.selectedRows;
         this.selectedFieldsValue = '';
         // Display that fieldName of the selected rows in a comma delimited way
         for ( i = 0; i < selectedRows.length; i++){
             if(this.selectedFieldsValue !=='' ){
-                this.selectedFieldsValue = this.selectedFieldsValue + ',' 
+                this.selectedFieldsValue = this.selectedFieldsValue + ','
                                         + selectedRows[i].FieldAPIName;
             }
             else{
                 this.selectedFieldsValue = selectedRows[i].FieldAPIName;
-            }            
+            }
         }
     }
 
     //this method is fired when retrieve records button is clicked
-    handleClick(){        
+    handleClick(){
         const valueParam = this.value;
         const selectedFieldsValueParam = this.selectedFieldsValue;
 
@@ -131,13 +131,13 @@ export default class DisplayObjectsAndFields extends LightningElement {
         }
         else {
             //propage event to next component
-            const evtCustomEvent = new CustomEvent('retreive', {   
+            const evtCustomEvent = new CustomEvent('retreive', {
                 detail: {valueParam, selectedFieldsValueParam}
                 });
             this.dispatchEvent(evtCustomEvent);
-        }        
-    } 
-    
+        }
+    }
+
     //this method is fired when reset button is clicked.
     handleResetClick(){
         this.value = '';
