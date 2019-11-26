@@ -7,7 +7,7 @@ public inherited sharing class DescribeObjectHelper {
                     QualifiedApiName 
                     FROM EntityDefinition 
                     WHERE IsApexTriggerable = true
-                    ORDER BY MasterLabel];
+                    ORDER BY MasterLabel desc];
     }
 
     //Retrieve field details based on Object API Name

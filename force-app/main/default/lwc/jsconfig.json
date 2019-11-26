@@ -13,6 +13,9 @@
             ],
             "c/retrieveRecord": [
                 "retrieveRecord/retrieveRecord.js"
+            ],
+            "c/listOfObjects": [
+                "listOfObjects/listOfObjects.js"
             ]
         },
         "experimentalDecorators": true
