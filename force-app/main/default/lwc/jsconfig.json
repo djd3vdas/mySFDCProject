@@ -11,11 +11,11 @@
             "c/helloWorld": [
                 "helloWorld/helloWorld.js"
             ],
-            "c/retrieveRecord": [
-                "retrieveRecord/retrieveRecord.js"
-            ],
             "c/listOfObjects": [
                 "listOfObjects/listOfObjects.js"
+            ],
+            "c/retrieveRecord": [
+                "retrieveRecord/retrieveRecord.js"
             ]
         },
         "experimentalDecorators": true
